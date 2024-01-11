@@ -1,67 +1,26 @@
 "use client";
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
+import { useState } from "react";
+import { Dialog, Popover } from "@headlessui/react";
 
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+const links = [
+  { text: "Home", href: "#" },
+  { text: "Portfolio", href: "#" },
+  { text: "Resume", href: "#" },
+  { text: "Services", href: "#" },
+  { text: "Blog", href: "#" },
+  { text: "Contact", href: "#" },
+  { text: "About", href: "#" },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('home'); 
+
 
   return (
-    <header className="bg-white">
+    <header className="bg-[#1e293b]">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -86,35 +45,41 @@ export default function Header() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Home
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Portfolio
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Resume
-          </a>{" "}
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Services
-          </a>{" "}
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Blog
-          </a>{" "}
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Contact
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            About
-          </a>
+        <Popover.Group className="hidden lg:flex lg:gap-x-6">
+        {links.map((link, index) => (
+        <a
+          key={index}
+          href={link.href}
+          className="text-sm font-semibold focus:bg-slate-500 leading-6 px-3 py-1 rounded-md shadow-md focus:text-gray-300
+           text-white "
+        >
+          {link.text}
+        </a>
+      ))}
         </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
           <a
-            href="#"
-            className="text-sm uppercase         font-semibold leading-6 text-gray-900"
+            href="/resume.pdf"
+            download
+            className="text-sm flex gap-2 uppercase         font-semibold leading-6 text-white"
           >
-            Download Cv <span aria-hidden="true">&rarr;</span>
+            Download Cv{" "}
+            <svg
+              className="animate-bounce w-6 h-6 "
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              id="down-arrow"
+            >
+              <path
+                fill="#6563ff"
+                d="m7.293 12.707 4 4a1.004 1.004 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L13 13.586V8a1 1 0 0 0-2 0v5.586l-2.293-2.293a1 1 0 0 0-1.414 1.414Z"
+              ></path>
+              <path
+                fill="#b2b1ff"
+                d="M12 22A10 10 0 1 0 2 12a10.011 10.011 0 0 0 10 10ZM7.293 11.293a1 1 0 0 1 1.414 0L11 13.586V8a1 1 0 0 1 2 0v5.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1.004 1.004 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
+              ></path>
+            </svg>
+            {/* <span aria-hidden="true">&rarr;</span> */}
           </a>
         </div>
       </nav>
@@ -147,55 +112,38 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Home
-                </a>{" "}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Portfolio
-                </a>{" "}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Resume
-                </a>{" "}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Services
-                </a>{" "}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Blog
-                </a>{" "}
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Contact
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  About
-                </a>
+                {links.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.href}
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    {link.text}
+                  </a>
+                ))}
               </div>
               <div className="py-6">
                 <a
-                  href="#"
-                  className="-mx-3 uppercase block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  href="/resume.pdf"
+                  download
+                  className="text-sm gap-2 flex uppercase         font-semibold leading-6 text-gray-900"
                 >
-                  Download Cv
+                  Download Cv{" "}
+                  <svg
+                    className="animate-bounce w-6 h-6 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    id="down-arrow"
+                  >
+                    <path
+                      fill="#6563ff"
+                      d="m7.293 12.707 4 4a1.004 1.004 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L13 13.586V8a1 1 0 0 0-2 0v5.586l-2.293-2.293a1 1 0 0 0-1.414 1.414Z"
+                    ></path>
+                    <path
+                      fill="#b2b1ff"
+                      d="M12 22A10 10 0 1 0 2 12a10.011 10.011 0 0 0 10 10ZM7.293 11.293a1 1 0 0 1 1.414 0L11 13.586V8a1 1 0 0 1 2 0v5.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1.004 1.004 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414Z"
+                    ></path>
+                  </svg>
                 </a>
               </div>
             </div>
