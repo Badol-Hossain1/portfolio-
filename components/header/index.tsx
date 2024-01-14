@@ -5,7 +5,7 @@ import { Dialog, Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const links = [
-  { text: "Home", href: "#" },
+  { text: "Home", href: "#home" },
   { text: "Portfolio", href: "#" },
   { text: "Resume", href: "#" },
   { text: "Services", href: "#" },
@@ -16,11 +16,10 @@ const links = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home'); 
-
+  const [activeIndex, setActiveIndex] = useState<number>();
 
   return (
-    <header className="bg-[#1e293b]">
+    <header className="bg-[#FFFFFF]">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -46,22 +45,23 @@ export default function Header() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-6">
-        {links.map((link, index) => (
-        <a
-          key={index}
-          href={link.href}
-          className="text-sm font-semibold focus:bg-slate-500 leading-6 px-3 py-1 rounded-md shadow-md focus:text-gray-300
-           text-white "
-        >
-          {link.text}
-        </a>
-      ))}
+          {links.map((link, index) => (
+            <a
+              key={index}
+              href={link.href}
+              className={`text-sm font-semibold leading-6 px-3 py-1 rounded-md shadow-md
+              ${activeIndex === index ? 'text-white bg-gray-400' : 'text-black focus:bg-slate-500 hover:bg-gray-50'}`}
+            onClick={() => setActiveIndex(index)}
+            >
+              {link.text}
+            </a>
+          ))}
         </Popover.Group>
         <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
           <a
             href="/resume.pdf"
             download
-            className="text-sm flex gap-2 uppercase         font-semibold leading-6 text-white"
+            className="text-sm rounded-lg flex px-3 py-2 gap-2 uppercase         font-semibold leading-6 text-white bg-red-600"
           >
             Download Cv{" "}
             <svg
@@ -89,8 +89,8 @@ export default function Header() {
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
-        <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className="fixed inset-0 z-10 bg-white" />
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto  px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
